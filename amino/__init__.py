@@ -16,4 +16,3 @@ __newest__ = loads(get("https://pypi.python.org/pypi/Amino.py/json").text)["info
 
 if __version__ != __newest__:
     print(exceptions.LibraryUpdateAvailable(f"New version of {__title__} available: {__newest__} (Using {__version__})"))
-# test2
