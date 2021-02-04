@@ -16,7 +16,7 @@ from .socket import Callbacks, SocketHandler
 device = device.DeviceGenerator()
 
 class Client:
-    def __init__(self, callback = Callbacks, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = True):
+    def __init__(self, callback = Callbacks, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
         self.api = "https://service.narvii.com/api/v1"
         self.authenticated = False
         self.configured = False
