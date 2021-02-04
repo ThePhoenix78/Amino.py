@@ -10,7 +10,7 @@ from .lib.util import objects
 
 class SocketHandler:
     def __init__(self, client, socket_trace = False, debug = False):
-        websocket.enableTrace(True)
+        # websocket.enableTrace(True)
         self.socket_url = "wss://ws1.narvii.com"
         self.client = client
         self.debug = debug
@@ -21,59 +21,61 @@ class SocketHandler:
         self.reconnect = True
         self.socket_stop = False
         self.socketDelay = 0
+        self.socket_trace = socket_trace
         self.socketDelayFetch = 120  # Reconnects every 120 seconds.
+        #threading.Thread(target=self.reconnect_handler).start()
+        #websocket.enableTrace(socket_trace)
 
-        self.socket_handler = threading.Thread(target = self.reconnect_handler)
-        self.socket_handler.start()
-
-        websocket.enableTrace(socket_trace)
+    def run(self):
+        threading.Thread(target=self.reconnect_handler).start()
+        websocket.enableTrace(self.socket_trace)
 
     def reconnect_handler(self):
         # Made by enchart#3410 thx
         # Fixed by The_Phoenix#3967
         # Fixed by enchart again lmao
         while True:
-            if self.debug is True:
+            if self.debug:
                 print(f"[socket][reconnect_handler] socketDelay : {self.socketDelay}")
 
             if self.socketDelay >= self.socketDelayFetch and self.active:
-                if self.debug is True:
+                if self.debug:
                     print(f"[socket][reconnect_handler] socketDelay >= {self.socketDelayFetch}, Reconnecting Socket")
 
                 self.close()
                 self.start()
                 self.socketDelay = 0
 
-            self.socketDelay += 1
+            self.socketDelay += 5
 
-            if self.reconnect is False:
-                if self.debug is True:
+            if not self.reconnect:
+                if self.debug:
                     print(f"[socket][reconnect_handler] reconnect is False, breaking")
 
                 break
 
-            time.sleep(1)
+            time.sleep(5)
 
     def on_open(self):
-        if self.debug is True:
+        if self.debug:
             print("[socket][on_open] Socket Opened")
 
         pass
 
     def on_close(self):
-        if self.debug is True:
+        if self.debug:
             print("[socket][on_close] Socket Closed")
 
         self.active = False
 
         if self.reconnect:
-            if self.debug is True:
+            if self.debug:
                 print("[socket][on_close] reconnect is True, Opening Socket")
 
             self.start()
 
     def on_ping(self, data):
-        if self.debug is True:
+        if self.debug:
             print("[socket][on_ping] Socket Pinged")
 
         contextlib.suppress(self.socket.sock.pong(data))
@@ -83,13 +85,13 @@ class SocketHandler:
         return
 
     def send(self, data):
-        if self.debug is True:
+        if self.debug:
             print(f"[socket][send] Sending Data : {data}")
 
         self.socket.send(data)
 
     def start(self):
-        if self.debug is True:
+        if self.debug:
             print(f"[socket][start] Starting Socket")
 
         self.headers = {
@@ -110,19 +112,20 @@ class SocketHandler:
         self.reconnect = True
         self.active = True
 
-        if self.debug is True:
+        if self.debug:
             print(f"[socket][start] Socket Started")
 
     def close(self):
-        if self.debug is True:
+        if self.debug:
             print(f"[socket][close] Closing Socket")
 
         self.reconnect = False
         self.active = False
         self.socket_stop = True
-        try: self.socket.close()
+        try:
+            self.socket.close()
         except Exception as closeError:
-            if self.debug is True:
+            if self.debug:
                 print(f"[socket][close] Error while closing Socket : {closeError}")
 
         return
