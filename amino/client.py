@@ -364,7 +364,7 @@ class Client:
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: self.configured = True; return response.status_code
 
-    def upload_media(self, file: BinaryIO):
+    def upload_media(self, file: BinaryIO, fileType: str):
         """
         Upload file to the amino servers.
 
@@ -376,8 +376,14 @@ class Client:
 
             - **Fail** : :meth:`Exceptions <amino.lib.util.exceptions>`
         """
+        if fileType == "audio":
+            t = "audio/aac"
+        elif fileType == "image":
+            t = "image/jpg"
+        else: raise exceptions.SpecifyType(fileType)
+
         data = file.read()
-        response = requests.post(f"{self.api}/g/s/media/upload", data=data, headers=headers.Headers(type=f"image/jpg", data=data).headers, proxies=self.proxies, verify=self.certificatePath)
+        response = requests.post(f"{self.api}/g/s/media/upload", data=data, headers=headers.Headers(type=t, data=data).headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return json.loads(response.text)["mediaValue"]
 
@@ -632,7 +638,7 @@ class Client:
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else:
             response = json.loads(response.text)["resultList"]
-            if len(response) == 0: raise exceptions.CommunityNotFound
+            if len(response) == 0: raise exceptions.CommunityNotFound(aminoId)
             else: return objects.CommunityList([com["refObject"] for com in response]).CommunityList
 
     def get_user_following(self, userId: str, start: int = 0, size: int = 25):
@@ -865,7 +871,7 @@ class Client:
                 mentions.append({"uid": mention_uid})
 
         if embedImage:
-            embedImage = [[100, self.upload_media(embedImage), None]]
+            embedImage = [[100, self.upload_media(embedImage, "image"), None]]
 
         data = {
             "type": messageType,

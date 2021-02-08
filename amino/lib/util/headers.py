@@ -19,5 +19,3 @@ class Headers:
         if sid: headers["NDCAUTH"] = f"sid={sid}"
         if type: headers["Content-Type"] = type
         self.headers = headers
-
-

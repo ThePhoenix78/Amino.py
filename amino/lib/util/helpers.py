@@ -1,7 +1,11 @@
 import re
 import json
 import base64
+import requests
 from secrets import token_hex
+
+from bs4 import BeautifulSoup
+
 
 def generate_device_info():
     # I'm still trying to figure out how to generate the device id. So far, decompilation is proving difficult,
@@ -17,7 +21,29 @@ def decode_base64(data: str):
     return base64.b64decode(data + b'=' * (-len(data) % 4)).decode("cp437")[1:]
 
 def sid_to_uid(SID: str):
-    return json.loads(decode_base64(SID))["2"]
+    try: return json.loads(decode_base64(SID))["2"]
+    except json.decoder.JSONDecodeError: return sid_to_uid_2(SID)
 
 def sid_to_ip_address(SID: str):
-    return json.loads(decode_base64(SID))["4"]
+    try: return json.loads(decode_base64(SID))["4"]
+    except json.decoder.JSONDecodeError: return sid_to_ip_address_2(SID)
+
+def sid_to_uid_2(SID: str):
+    data = f'input={SID}&charset=UTF-8'
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post('https://www.base64decode.org/', data, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    output = soup.find('textarea', {'id': 'output'})
+    uid = output.text.split(':')[4].split(',')[0].replace('"', '').replace(' ', '')
+
+    return uid
+
+def sid_to_ip_address_2(SID: str):
+    data = f'input={SID}&charset=UTF-8'
+    headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+    response = requests.post('https://www.base64decode.org/', data, headers=headers)
+    soup = BeautifulSoup(response.text, 'html.parser')
+    output = soup.find('textarea', {'id': 'output'})
+    ip_address = output.text.split(':')[6].split(',')[0].replace('"', '').replace(' ', '')
+
+    return ip_address

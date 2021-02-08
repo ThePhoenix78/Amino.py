@@ -403,6 +403,24 @@ class CommunityDeleted(Exception):
     def __init__(*args, **kwargs):
         Exception.__init__(*args, **kwargs)
 
+class DuplicatePollOption(Exception):
+    """
+    - **API Code** : 1501
+    - **API Message** : Sorry, you have duplicate poll options.
+    - **API String** : ``Unknown String``
+    """
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
+
+class ReachedMaxPollOptions(Exception):
+    """
+    - **API Code** : 1507
+    - **API Message** : Sorry, you can only join or add up to 5 of your items per poll.
+    - **API String** : ``Unknown String``
+    """
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
+
 class ChatFull(Exception):
     """
     - **API Code** : 1605
@@ -794,6 +812,8 @@ def CheckException(data):
     elif api_code == 805: raise CommunityNameAlreadyTaken(data)
     elif api_code == 806: raise CommunityCreateLimitReached(data)
     elif api_code == 833: raise CommunityDeleted(data)
+    elif api_code == 1501: raise DuplicatePollOption(data)
+    elif api_code == 1507: raise ReachedMaxPollOptions(data)
     elif api_code == 1605: raise ChatFull(data)
     elif api_code == 1611: raise ChatInvitesDisabled(data)
     elif api_code == 1612: raise RemovedFromChat(data)

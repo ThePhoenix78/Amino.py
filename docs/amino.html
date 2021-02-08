@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Modules &mdash; Amino.py 1.2.11.5 documentation</title>
+  <title>Modules &mdash; Amino.py 1.2.11.6 documentation</title>
   
 
   
@@ -173,7 +173,7 @@
 <span id="acm"></span><h2>ACM<a class="headerlink" href="#module-amino.acm" title="Permalink to this headline">¶</a></h2>
 <dl class="py class">
 <dt id="amino.acm.ACM">
-<em class="property">class </em><code class="sig-prename descclassname">amino.acm.</code><code class="sig-name descname">ACM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">comId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.acm.ACM" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">amino.acm.</code><code class="sig-name descname">ACM</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">profile</span><span class="p">:</span> <span class="n"><a class="reference internal" href="#amino.lib.util.objects.UserProfile" title="amino.lib.util.objects.UserProfile">amino.lib.util.objects.UserProfile</a></span></em>, <em class="sig-param"><span class="n">comId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.acm.ACM" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#amino.client.Client" title="amino.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">amino.client.Client</span></code></a></p>
 <dl class="py method">
 <dt id="amino.acm.ACM.accept_join_request">
@@ -1586,7 +1586,7 @@
 
 <dl class="py method">
 <dt id="amino.client.Client.upload_media">
-<code class="sig-name descname">upload_media</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span><span class="p">:</span> <span class="n">BinaryIO</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.upload_media" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">upload_media</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">file</span><span class="p">:</span> <span class="n">BinaryIO</span></em>, <em class="sig-param"><span class="n">fileType</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.upload_media" title="Permalink to this definition">¶</a></dt>
 <dd><p>Upload file to the amino servers.</p>
 <dl class="simple">
 <dt><strong>Parameters</strong></dt><dd><ul class="simple">
@@ -1656,8 +1656,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="amino.sub_client.SubClient.accept_wiki_request">
+<code class="sig-name descname">accept_wiki_request</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">destinationCategoryIdList</span><span class="p">:</span> <span class="n">list</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.accept_wiki_request" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="amino.sub_client.SubClient.activity_status">
 <code class="sig-name descname">activity_status</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">status</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.activity_status" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="amino.sub_client.SubClient.add_poll_option">
+<code class="sig-name descname">add_poll_option</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">question</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.add_poll_option" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1747,6 +1757,11 @@
 </dd></dl>
 
 <dl class="py method">
+<dt id="amino.sub_client.SubClient.create_wiki_category">
+<code class="sig-name descname">create_wiki_category</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">parentCategoryId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.create_wiki_category" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="amino.sub_client.SubClient.delete_blog">
 <code class="sig-name descname">delete_blog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.delete_blog" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -1802,13 +1817,18 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="amino.sub_client.SubClient.delete_wiki">
+<code class="sig-name descname">delete_wiki</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wikiId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.delete_wiki" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="amino.sub_client.SubClient.downvote_comment">
 <code class="sig-name descname">downvote_comment</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">commentId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.downvote_comment" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.edit_blog">
-<code class="sig-name descname">edit_blog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">categoriesList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">images</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.edit_blog" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">edit_blog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">imageList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">categoriesList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.edit_blog" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2355,6 +2375,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="amino.sub_client.SubClient.get_wiki_submissions">
+<code class="sig-name descname">get_wiki_submissions</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">start</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em>, <em class="sig-param"><span class="n">size</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">25</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.get_wiki_submissions" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="amino.sub_client.SubClient.hide">
 <code class="sig-name descname">hide</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">userId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">blogId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">wikiId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">quizId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fileId</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reason</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.hide" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -2499,12 +2524,12 @@
 
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.post_blog">
-<code class="sig-name descname">post_blog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">categoriesList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">extensions</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.post_blog" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">post_blog</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">imageList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">categoriesList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em>, <em class="sig-param"><span class="n">extensions</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>dict<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.post_blog" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.post_wiki">
-<code class="sig-name descname">post_wiki</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">icon</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">keywords</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">images</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.post_wiki" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">post_wiki</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">content</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">icon</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">imageList</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>list<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">keywords</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">backgroundColor</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">fansOnly</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.post_wiki" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2515,6 +2540,11 @@
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.purchase">
 <code class="sig-name descname">purchase</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">objectId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">objectType</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">aminoPlus</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">True</span></em>, <em class="sig-param"><span class="n">autoRenew</span><span class="p">:</span> <span class="n">bool</span> <span class="o">=</span> <span class="default_value">False</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.purchase" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="amino.sub_client.SubClient.reject_wiki_request">
+<code class="sig-name descname">reject_wiki_request</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.reject_wiki_request" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2554,7 +2584,7 @@
 
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.send_active_obj">
-<code class="sig-name descname">send_active_obj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">startTime</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">endTime</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">optInAdsFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2147483647</span></em>, <em class="sig-param"><span class="n">timezone</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.send_active_obj" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">send_active_obj</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">startTime</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">endTime</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">optInAdsFlags</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">2147483647</span></em>, <em class="sig-param"><span class="n">tz</span><span class="p">:</span> <span class="n">int</span> <span class="o">=</span> <span class="default_value">0</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.send_active_obj" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2622,6 +2652,11 @@
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.strike">
 <code class="sig-name descname">strike</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">userId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">time</span><span class="p">:</span> <span class="n">int</span></em>, <em class="sig-param"><span class="n">title</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em>, <em class="sig-param"><span class="n">reason</span><span class="p">:</span> <span class="n">Optional<span class="p">[</span>str<span class="p">]</span></span> <span class="o">=</span> <span class="default_value">None</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.strike" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="amino.sub_client.SubClient.submit_to_wiki">
+<code class="sig-name descname">submit_to_wiki</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">wikiId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">message</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.submit_to_wiki" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -3098,6 +3133,11 @@
 <dd></dd></dl>
 
 <dl class="py method">
+<dt id="amino.socket.SocketHandler.run">
+<code class="sig-name descname">run</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.SocketHandler.run" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
 <dt id="amino.socket.SocketHandler.send">
 <code class="sig-name descname">send</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.SocketHandler.send" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
@@ -3396,6 +3436,16 @@
 <dt id="amino.lib.util.objects.Objects.Users">
 <em class="property">class </em><code class="sig-name descname">Users</code><a class="headerlink" href="#amino.lib.util.objects.Objects.Users" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py attribute">
+<dt id="amino.lib.util.objects.Objects.Users.news_feed">
+<code class="sig-name descname">news_feed</code><em class="property"> = '000000000-0000-0000-0000-000000000001'</em><a class="headerlink" href="#amino.lib.util.objects.Objects.Users.news_feed" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py attribute">
+<dt id="amino.lib.util.objects.Objects.Users.team_amino">
+<code class="sig-name descname">team_amino</code><em class="property"> = '000000000-0000-0000-0000-000000000000'</em><a class="headerlink" href="#amino.lib.util.objects.Objects.Users.team_amino" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </dd></dl>
 
 </dd></dl>
@@ -3737,6 +3787,17 @@
 <dl class="py method">
 <dt id="amino.lib.util.objects.WikiList.WikiList">
 <em class="property">property </em><code class="sig-name descname">WikiList</code><a class="headerlink" href="#amino.lib.util.objects.WikiList.WikiList" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt id="amino.lib.util.objects.WikiRequestList">
+<em class="property">class </em><code class="sig-prename descclassname">amino.lib.util.objects.</code><code class="sig-name descname">WikiRequestList</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.objects.WikiRequestList" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="amino.lib.util.objects.WikiRequestList.WikiRequestList">
+<em class="property">property </em><code class="sig-name descname">WikiRequestList</code><a class="headerlink" href="#amino.lib.util.objects.WikiRequestList.WikiRequestList" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </dd></dl>
@@ -4148,6 +4209,17 @@
 </dd></dl>
 
 <dl class="py exception">
+<dt id="amino.lib.util.exceptions.DuplicatePollOption">
+<em class="property">exception </em><code class="sig-prename descclassname">amino.lib.util.exceptions.</code><code class="sig-name descname">DuplicatePollOption</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.exceptions.DuplicatePollOption" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<ul class="simple">
+<li><p><strong>API Code</strong> : 1501</p></li>
+<li><p><strong>API Message</strong> : Sorry, you have duplicate poll options.</p></li>
+<li><p><strong>API String</strong> : <code class="docutils literal notranslate"><span class="pre">Unknown</span> <span class="pre">String</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="py exception">
 <dt id="amino.lib.util.exceptions.EmailAlreadyTaken">
 <em class="property">exception </em><code class="sig-prename descclassname">amino.lib.util.exceptions.</code><code class="sig-name descname">EmailAlreadyTaken</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.exceptions.EmailAlreadyTaken" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
@@ -4439,6 +4511,17 @@
 </dd></dl>
 
 <dl class="py exception">
+<dt id="amino.lib.util.exceptions.ReachedMaxPollOptions">
+<em class="property">exception </em><code class="sig-prename descclassname">amino.lib.util.exceptions.</code><code class="sig-name descname">ReachedMaxPollOptions</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.exceptions.ReachedMaxPollOptions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
+<ul class="simple">
+<li><p><strong>API Code</strong> : 1507</p></li>
+<li><p><strong>API Message</strong> : Sorry, you can only join or add up to 5 of your items per poll.</p></li>
+<li><p><strong>API String</strong> : <code class="docutils literal notranslate"><span class="pre">Unknown</span> <span class="pre">String</span></code></p></li>
+</ul>
+</dd></dl>
+
+<dl class="py exception">
 <dt id="amino.lib.util.exceptions.ReachedMaxTitles">
 <em class="property">exception </em><code class="sig-prename descclassname">amino.lib.util.exceptions.</code><code class="sig-name descname">ReachedMaxTitles</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.exceptions.ReachedMaxTitles" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Exception</span></code></p>
@@ -4675,8 +4758,18 @@
 <dd></dd></dl>
 
 <dl class="py function">
+<dt id="amino.lib.util.helpers.sid_to_ip_address_2">
+<code class="sig-prename descclassname">amino.lib.util.helpers.</code><code class="sig-name descname">sid_to_ip_address_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">SID</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.helpers.sid_to_ip_address_2" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
 <dt id="amino.lib.util.helpers.sid_to_uid">
 <code class="sig-prename descclassname">amino.lib.util.helpers.</code><code class="sig-name descname">sid_to_uid</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">SID</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.helpers.sid_to_uid" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py function">
+<dt id="amino.lib.util.helpers.sid_to_uid_2">
+<code class="sig-prename descclassname">amino.lib.util.helpers.</code><code class="sig-name descname">sid_to_uid_2</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">SID</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.lib.util.helpers.sid_to_uid_2" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 </div>

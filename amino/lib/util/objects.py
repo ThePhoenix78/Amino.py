@@ -3,16 +3,15 @@
 
 class Objects:
     class Users:
-        def __init__(self):
-            self.team_amino = "000000000-0000-0000-0000-000000000000"
-            self.news_feed = "000000000-0000-0000-0000-000000000001"
+        team_amino = "000000000-0000-0000-0000-000000000000"
+        news_feed = "000000000-0000-0000-0000-000000000001"
 
 class UserProfile:
     def __init__(self, data):
         self.json = data
 
-        #try: self.fanClub: FanClubList = FanClubList(data["fanClubList"]).FanClubList
-        #except (KeyError, TypeError): self.fanClub: FanClubList = FanClubList([])
+        try: self.fanClub: FanClubList = FanClubList(data["fanClubList"]).FanClubList
+        except (KeyError, TypeError): self.fanClub: FanClubList = FanClubList([])
 
         self.accountMembershipStatus = None
         self.activation = None
@@ -3516,5 +3515,57 @@ class InviteCodeList:
             except (KeyError, TypeError): self.createdTime.append(None)
             try: self.inviteCode.append(x["inviteCode"])
             except (KeyError, TypeError): self.inviteCode.append(None)
+
+        return self
+
+class WikiRequestList:
+    def __init__(self, data):
+        _author, _wiki, _originalWiki = [], [], []
+
+        self.json = data
+
+        for y in data:
+            try: _author.append(y["operator"])
+            except (KeyError, TypeError): _author.append(None)
+            try: _wiki.append(y["item"])
+            except (KeyError, TypeError): _wiki.append(None)
+            try: _originalWiki.append(y["originalItem"])
+            except (KeyError, TypeError): _originalWiki.append(None)
+
+        self.author: UserProfileList = UserProfileList(_author).UserProfileList
+        self.wiki: WikiList = WikiList(_wiki).WikiList
+        self.originalWiki: WikiList = WikiList(_originalWiki).WikiList
+
+        self.authorId = []
+        self.status = []
+        self.modifiedTime = []
+        self.message = []
+        self.wikiId = []
+        self.requestId = []
+        self.destinationItemId = []
+        self.createdTime = []
+        self.responseMessage = []
+
+    @property
+    def WikiRequestList(self):
+        for x in self.json:
+            try: self.authorId.append(x["uid"])
+            except (KeyError, TypeError): self.authorId.append(None)
+            try: self.status.append(x["status"])
+            except (KeyError, TypeError): self.status.append(None)
+            try: self.modifiedTime.append(x["modifiedTime"])
+            except (KeyError, TypeError): self.modifiedTime.append(None)
+            try: self.message.append(x["message"])
+            except (KeyError, TypeError): self.message.append(None)
+            try: self.wikiId.append(x["itemId"])
+            except (KeyError, TypeError): self.wikiId.append(None)
+            try: self.requestId.append(x["requestId"])
+            except (KeyError, TypeError): self.requestId.append(None)
+            try: self.destinationItemId.append(x["destinationItemId"])
+            except (KeyError, TypeError): self.destinationItemId.append(None)
+            try: self.createdTime.append(x["createdTime"])
+            except (KeyError, TypeError): self.createdTime.append(None)
+            try: self.responseMessage.append(x["responseMessage"])
+            except (KeyError, TypeError): self.responseMessage.append(None)
 
         return self

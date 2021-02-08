@@ -54,11 +54,17 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def post_blog(self, title: str, content: str, categoriesList: list = None, backgroundColor: str = None, fansOnly: bool = False, extensions: dict = None):
+    def post_blog(self, title: str, content: str, imageList: list = None, categoriesList: list = None, backgroundColor: str = None, fansOnly: bool = False, extensions: dict = None):
+        mediaList = []
+
+        for image in imageList:
+            mediaList.append([100, self.upload_media(image, "image"), None])
+
         data = {
             "address": None,
             "content": content,
             "title": title,
+            "mediaList": mediaList,
             "extensions": extensions,
             "latitude": 0,
             "longitude": 0,
@@ -75,16 +81,16 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def post_wiki(self, title: str, content: str, icon: str = None, keywords: str = None, backgroundColor: str = None, images: list = None, fansOnly: bool = False):
-        if images:
-            images_list = []
-            for item in images:
-                content = content.replace(item.replace_key, f"[IMG={item.replace_key}]")
-                images_list.append(item.media_list_item)
+    def post_wiki(self, title: str, content: str, icon: str = None, imageList: list = None, keywords: str = None, backgroundColor: str = None, fansOnly: bool = False):
+        mediaList = []
+
+        for image in imageList:
+            mediaList.append([100, self.upload_media(image, "image"), None])
 
         data = {
             "label": title,
             "content": content,
+            "mediaList": mediaList,
             "eventSource": "GlobalComposeMenu",
             "timestamp": int(timestamp() * 1000)
         }
@@ -98,18 +104,15 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def edit_blog(self, blogId: str, title: str = None, content: str = None, categoriesList: list = None, backgroundColor: str = None, images: list = None, fansOnly: bool = False):
-        if images:
-            images_list = []
-            for item in images:
-                content = content.replace(item.replace_key, f"[IMG={item.replace_key}]")
-                images_list.append(item.media_list_item)
+    def edit_blog(self, blogId: str, title: str = None, content: str = None, imageList: list = None, categoriesList: list = None, backgroundColor: str = None, fansOnly: bool = False):
+        mediaList = []
 
-        else: images_list = None
+        for image in imageList:
+            mediaList.append([100, self.upload_media(image, "image"), None])
 
         data = {
             "address": None,
-            "mediaList": images_list,
+            "mediaList": mediaList,
             "latitude": 0,
             "longitude": 0,
             "eventSource": "PostDetailView",
@@ -128,6 +131,11 @@ class SubClient(client.Client):
 
     def delete_blog(self, blogId: str):
         response = requests.delete(f"{self.api}/x{self.comId}/s/blog/{blogId}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def delete_wiki(self, wikiId: str):
+        response = requests.delete(f"{self.api}/x{self.comId}/s/item/{wikiId}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
@@ -371,14 +379,14 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def send_active_obj(self, startTime: int, endTime: int, optInAdsFlags: int = 2147483647, timezone: int = -timezone // 1000):
+    def send_active_obj(self, startTime: int, endTime: int, optInAdsFlags: int = 2147483647, tz: int = -timezone // 1000):
         data = json.dumps({
             "userActiveTimeChunkList": [{
                 "start": startTime,
                 "end": endTime
             }],
             "optInAdsFlags": optInAdsFlags,
-            "timezone": timezone
+            "timezone": tz
         })
 
         response = requests.post(f"{self.api}/x{self.comId}/s/community/stats/user-active-time", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
@@ -665,7 +673,7 @@ class SubClient(client.Client):
                 mentions.append({"uid": mention_uid})
 
         if embedImage:
-            embedImage = [[100, self.upload_media(embedImage), None]]
+            embedImage = [[100, self.upload_media(embedImage, "image"), None]]
 
         data = {
             "type": messageType,
@@ -706,7 +714,7 @@ class SubClient(client.Client):
                 data["mediaUploadValueContentType"] = "image/gif"
                 data["mediaUhqEnabled"] = True
 
-            else: raise exceptions.SpecifyType()
+            else: raise exceptions.SpecifyType(fileType)
 
             data["mediaUploadValue"] = base64.b64encode(file.read()).decode()
 
@@ -1801,7 +1809,7 @@ class SubClient(client.Client):
         else: data['paymentContext'] = {'discountStatus': 0, 'discountValue': 1, 'isAutoRenew': autoRenew}
 
         data = json.dumps(data)
-        response = requests.post(f"{self.api}/x{self.comId}/s/store/purchase",headers=headers.Headers(data=data).headers, data=data)
+        response = requests.post(f"{self.api}/x{self.comId}/s/store/purchase", headers=headers.Headers(data=data).headers, data=data)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
@@ -1840,3 +1848,63 @@ class SubClient(client.Client):
         response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
+
+    def add_poll_option(self, blogId: str, question: str):
+        data = json.dumps({
+            "mediaList": None,
+            "title": question,
+            "type": 0,
+            "timestamp": int(timestamp() * 1000)
+        })
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/blog/{blogId}/poll/option", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def create_wiki_category(self, title: str, parentCategoryId: str, content: str = None):
+        data = json.dumps({
+            "content": content,
+            "icon": None,
+            "label": title,
+            "mediaList": None,
+            "parentCategoryId": parentCategoryId,
+            "timestamp": int(timestamp() * 1000)
+        })
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/item-category", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def submit_to_wiki(self, wikiId: str, message: str):
+        data = json.dumps({
+            "message": message,
+            "itemId": wikiId,
+            "timestamp": int(timestamp() * 1000)
+        })
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/knowledge-base-request", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def accept_wiki_request(self, requestId: str, destinationCategoryIdList: list):
+        data = json.dumps({
+            "destinationCategoryIdList": destinationCategoryIdList,
+            "actionType": "create",
+            "timestamp": int(timestamp() * 1000)
+        })
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/knowledge-base-request/{requestId}/approve", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def reject_wiki_request(self, requestId: str):
+        data = json.dumps({})
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/knowledge-base-request/{requestId}/reject", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def get_wiki_submissions(self, start: int = 0, size: int = 25):
+        response = requests.get(f"{self.api}/x{self.comId}/s/knowledge-base-request?type=all&start={start}&size={size}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return objects.WikiRequestList(json.loads(response.text)["knowledgeBaseRequestList"]).WikiRequestList

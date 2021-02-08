@@ -10,7 +10,7 @@ device = device.DeviceGenerator()
 headers.sid = client.Client().sid
 
 class ACM(client.Client):
-    def __init__(self, profile: str, comId: str = None):
+    def __init__(self, profile: objects.UserProfile, comId: str = None):
         client.Client.__init__(self)
 
         self.profile = profile
@@ -60,7 +60,8 @@ class ACM(client.Client):
 
     def list_communities(self, start: int = 0, size: int = 25):
         response = requests.get(f"{self.api}/g/s/community/managed?start={start}&size={size}", headers=headers.Headers().headers)
-        return json.loads(response.text)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return objects.CommunityList(json.loads(response.text)["communityList"]).CommunityList
 
     def get_categories(self, start: int = 0, size: int = 25):
         if self.comId is None: raise exceptions.CommunityNeeded()
@@ -88,6 +89,7 @@ class ACM(client.Client):
 
     def promote(self, userId: str, rank: str):
         rank = rank.lower().replace("agent", "transfer-agent")
+
         if rank.lower() not in ["transfer-agent", "leader", "curator"]:
             raise exceptions.WrongType(rank)
 
