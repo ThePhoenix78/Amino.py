@@ -740,15 +740,18 @@ class SubClient(client.Client):
         """
         data = {
             "adminOpName": 102,
-            "adminOpNote": {"content": reason},
+            # "adminOpNote": {"content": reason},
             "timestamp": int(timestamp() * 1000)
         }
+        if asStaff and reason:
+            data["adminOpNote"] = {"content": reason}
 
         data = json.dumps(data)
         if not asStaff: response = requests.delete(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/message/{messageId}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         else: response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/message/{messageId}/admin", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
+
 
     def mark_as_read(self, chatId: str, messageId: str):
         """

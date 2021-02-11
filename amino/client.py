@@ -51,6 +51,7 @@ class Client:
         self.profile: objects.UserProfile = self.get_user_info(uId)
         headers.sid = self.sid
         self.socket.start()
+        self.socket.run()
 
     def login(self, email: str, password: str):
         """
