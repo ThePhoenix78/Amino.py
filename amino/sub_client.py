@@ -918,7 +918,7 @@ class SubClient(client.Client):
         transferRequest = chat_thread['extensions'].get('organizerTransferRequest')
         if(not transferRequest):
             raise exceptions.TransferRequestNeeded
-        
+
         self.accept_host(chatId)
 
     def kick(self, userId: str, chatId: str, allowRejoin: bool = True):
