@@ -913,6 +913,12 @@ class SubClient(client.Client):
         else: return response.status_code
 
     def accept_organizer(self, chatId: str):
+
+        chat_thread = self.get_chat_thread(chatId).json
+        transferRequest = chat_thread['extensions'].get('organizerTransferRequest')
+        if(not transferRequest):
+            raise exceptions.TransferRequestNeeded
+        
         self.accept_host(chatId)
 
     def kick(self, userId: str, chatId: str, allowRejoin: bool = True):
