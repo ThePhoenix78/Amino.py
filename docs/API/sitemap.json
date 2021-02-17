@@ -64,6 +64,16 @@
             "name": "Socket", 
             "description": "Modules - Socket",
             "url": "https://slimakoi.github.io/Amino.py/amino.html#module-amino.socket"
+        },
+        {
+            "name": "Python Module Index",
+            "description": "Module file structure",
+            "url": "https://slimakoi.github.io/Amino.py/py-modindex.html"
+        },
+        {
+            "name": "Gen Index",
+            "description": "Still have not found what you need? Try this!",
+            "url": "https://slimakoi.github.io/Amino.py/genindex.html"
         }
     ]
 }
