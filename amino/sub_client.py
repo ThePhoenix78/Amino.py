@@ -905,10 +905,10 @@ class SubClient(client.Client):
     def transfer_organizer(self, chatId: str, userIds: list):
         self.transfer_host(chatId, userIds)
 
-    def accept_host(self, chatId: str):
-        data = json.dumps({"timestamp": int(timestamp() * 1000)})
+    def accept_host(self, chatId: str, requestId: str):
+        data = json.dumps({})
 
-        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/accept-organizer", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/transfer-organizer/{requestId}/accept", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 

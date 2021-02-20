@@ -2052,6 +2052,8 @@ class Thread:
         self.screeningRoomHostId = None
         self.screeningRoomPermission = None
         self.disabledTime = None
+        self.organizerTransferCreatedTime = None
+        self.organizerTransferId = None
 
     @property
     def Thread(self):
@@ -2133,6 +2135,10 @@ class Thread:
         except (KeyError, TypeError): pass
         try: self.screeningRoomPermission = self.json["extensions"]["screeningRoomPermission"]["action"]
         except (KeyError, TypeError): pass
+        try: self.organizerTransferCreatedTime = self.json["extensions"]["organizerTransferRequest"]["createdTime"]
+        except (KeyError, TypeError): pass
+        try: self.organizerTransferId = self.json["extensions"]["organizerTransferRequest"]["requestId"]
+        except (KeyError, TypeError): pass
 
         return self
 
@@ -2191,6 +2197,8 @@ class ThreadList:
         self.screeningRoomHostId = []
         self.screeningRoomPermission = []
         self.disabledTime = []
+        self.organizerTransferCreatedTime = []
+        self.organizerTransferId = []
 
     @property
     def ThreadList(self):
@@ -2273,6 +2281,10 @@ class ThreadList:
             except (KeyError, TypeError): self.disabledTime.append(None)
             try:  self.screeningRoomPermission.append(chat["extensions"]["screeningRoomPermission"]["action"])
             except (KeyError, TypeError): self.screeningRoomPermission.append(None)
+            try:  self.organizerTransferCreatedTime.append(chat["extensions"]["organizerTransferRequest"]["createdTime"])
+            except (KeyError, TypeError): self.organizerTransferCreatedTime.append(None)
+            try:  self.organizerTransferId.append(chat["extensions"]["organizerTransferRequest"]["requestId"])
+            except (KeyError, TypeError): self.organizerTransferId.append(None)
 
         return self
 

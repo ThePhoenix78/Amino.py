@@ -1845,15 +1845,15 @@ class Client:
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.UserProfileCountList(json.loads(response.text)).UserProfileCountList
 
-    def accept_host(self, chatId: str):
-        data = json.dumps({"timestamp": int(timestamp() * 1000)})
+    def accept_host(self, chatId: str, requestId: str):
+        data = json.dumps({})
 
-        response = requests.post(f"{self.api}/g/s/chat/thread/{chatId}/accept-organizer", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        response = requests.post(f"{self.api}/g/s/chat/thread/{chatId}/transfer-organizer/{requestId}/accept", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def accept_organizer(self, chatId: str):
-        self.accept_host(chatId)
+    def accept_organizer(self, chatId: str, requestId: str):
+        self.accept_host(chatId, requestId)
 
     # Contributed by 'https://github.com/LynxN1'
     def link_identify(self, code: str):

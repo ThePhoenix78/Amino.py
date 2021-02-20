@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Modules &mdash; Amino.py 1.2.11.6 documentation</title>
+  <title>Modules &mdash; Amino.py 1.2.11.8 documentation</title>
   
 
   
@@ -276,12 +276,12 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt id="amino.client.Client.accept_host">
-<code class="sig-name descname">accept_host</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.accept_host" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">accept_host</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.accept_host" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="amino.client.Client.accept_organizer">
-<code class="sig-name descname">accept_organizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.accept_organizer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">accept_organizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.client.Client.accept_organizer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -1647,12 +1647,12 @@
 <dd><p>Bases: <a class="reference internal" href="#amino.client.Client" title="amino.client.Client"><code class="xref py py-class docutils literal notranslate"><span class="pre">amino.client.Client</span></code></a></p>
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.accept_host">
-<code class="sig-name descname">accept_host</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.accept_host" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">accept_host</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.accept_host" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
 <dt id="amino.sub_client.SubClient.accept_organizer">
-<code class="sig-name descname">accept_organizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.accept_organizer" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">accept_organizer</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">chatId</span><span class="p">:</span> <span class="n">str</span></em>, <em class="sig-param"><span class="n">requestId</span><span class="p">:</span> <span class="n">str</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.sub_client.SubClient.accept_organizer" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
 <dl class="py method">
@@ -2826,6 +2826,16 @@
 <dt id="amino.socket.Callbacks">
 <em class="property">class </em><code class="sig-prename descclassname">amino.socket.</code><code class="sig-name descname">Callbacks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">client</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.Callbacks" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt id="amino.socket.Callbacks.TYPE_USER_SHARE_EXURL">
+<code class="sig-name descname">TYPE_USER_SHARE_EXURL</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.Callbacks.TYPE_USER_SHARE_EXURL" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="py method">
+<dt id="amino.socket.Callbacks.TYPE_USER_SHARE_USER">
+<code class="sig-name descname">TYPE_USER_SHARE_USER</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.Callbacks.TYPE_USER_SHARE_USER" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 <dl class="py method">
 <dt id="amino.socket.Callbacks.call">
 <code class="sig-name descname">call</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">type</span></em>, <em class="sig-param"><span class="n">data</span></em><span class="sig-paren">)</span><a class="headerlink" href="#amino.socket.Callbacks.call" title="Permalink to this definition">¶</a></dt>
