@@ -8,6 +8,7 @@ from time import timezone
 from typing import BinaryIO
 from binascii import hexlify
 from time import time as timestamp
+from threading import Thread
 
 from . import client
 from .lib.util import exceptions, headers, device, objects
@@ -15,9 +16,27 @@ from .lib.util import exceptions, headers, device, objects
 device = device.DeviceGenerator()
 headers.sid = client.Client().sid
 
+
+class VCHeaders:
+    def __init__(self, data = None):
+        vc_headers = {
+            "Accept-Language": "en-US",
+            "Content-Type": "application/json",
+            "User-Agent": "Amino/45725 CFNetwork/1126 Darwin/19.5.0",  # Closest server (this one for me)
+            "Host": "rt.applovin.com",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "Keep-Alive",
+            "Accept": "*/*"
+        }
+
+        if data: vc_headers["Content-Length"] = str(len(data))
+        self.vc_headers = vc_headers
+
+
 class SubClient(client.Client):
     def __init__(self, comId: str = None, aminoId: str = None, *, profile: objects.UserProfile):
         client.Client.__init__(self)
+        self.vc_connect = False
 
         if comId is not None:
             self.comId = comId
@@ -1854,9 +1873,59 @@ class SubClient(client.Client):
     def invite_to_vc(self, chatId: str, userId: str):
         data = json.dumps({})
 
-        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        #response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/member/{userId}/invite_av_chat", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
+
+    def send_vc_informations(self):
+        while self.vc_connect:
+            data = VCHeaders()
+            self.client.socket.send(data)
+
+    def join_voice_chat(self, comId: str, chatId: str, joinType: int = 1):
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "channelType": 1,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 112  # ?
+        }
+        data = json.dumps(data)
+        self.client.socket.send(data)
+        Thread(target=self.send_vc_informations).start()
+        # response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        # if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        # else: return response.status_code
+
+    def join_video_chat(self, comId: str, chatId: str, joinType: int = 1):
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "channelType": 5,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 108  # ?
+        }
+        data = json.dumps(data)
+        self.client.socket.send(data)
+        Thread(target=self.send_vc_informations).start()
+        # response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        # if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        # else: return response.status_code
+
+    def leave_voice_chat(self):
+        # need to complete
+        self.vc_connect = False
+
+    def leave_video_chat(self):
+        # need to complete
+        self.vc_connect = False
 
     def add_poll_option(self, blogId: str, question: str):
         data = json.dumps({

@@ -60,8 +60,6 @@ class SocketHandler:
         if self.debug:
             print("[socket][on_open] Socket Opened")
 
-        pass
-
     def on_close(self):
         if self.debug:
             print("[socket][on_close] Socket Closed")
@@ -71,8 +69,6 @@ class SocketHandler:
         if self.reconnect:
             if self.debug:
                 print("[socket][on_close] reconnect is True, Opening Socket")
-
-            self.start()
 
     def on_ping(self, data):
         if self.debug:
