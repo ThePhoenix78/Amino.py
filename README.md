@@ -1,7 +1,7 @@
 # Amino.py
 A library to create Amino bots.
 
-### API Referance
+### API Reference
 Read the Docs: [Link Here](https://aminopy.readthedocs.io/en/latest/)
 
 #### What is this?
