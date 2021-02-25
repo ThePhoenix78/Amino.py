@@ -99,7 +99,7 @@ class ACM(client.Client):
         response = requests.post(f"{self.api}/x{self.comId}/s/user-profile/{userId}/{rank}", headers=headers.Headers(data=data).headers, data=data)
         if response.status_code == 200: return response.status_code
         else: return json.loads(response.text)
-        
+
     def get_join_requests(self, start: int = 0, size: int = 25):
         if self.comId is None: raise exceptions.CommunityNeeded()
 

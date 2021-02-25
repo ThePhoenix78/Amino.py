@@ -51,6 +51,7 @@ class Client:
         self.profile: objects.UserProfile = self.get_user_info(uId)
         headers.sid = self.sid
         self.socket.start()
+        self.socket.run()
 
     def login(self, email: str, password: str):
         """
@@ -76,6 +77,7 @@ class Client:
         })
 
         response = requests.post(f"{self.api}/g/s/auth/login", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        self.socket.run()
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
 
         else:
