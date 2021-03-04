@@ -40,7 +40,7 @@ class SubClient(client.Client):
 
         if comId is not None:
             self.comId = comId
-            self.community: objects.Community = client.Client().get_community_info(comId)
+            self.community: objects.Community = self.get_community_info(comId)
 
         if aminoId is not None:
             self.comId = client.Client().search_community(aminoId).comId[0]
@@ -1824,7 +1824,7 @@ class SubClient(client.Client):
             if blogId is not None: data["params"]["blogType"] = 0
             if quizId is not None: data["params"]["blogType"] = 6
 
-        return self.socket.send(json.dumps(data))
+        return self.send(json.dumps(data))
 
     # Provided by "spectrum#4691"
     def purchase(self, objectId: str, objectType: int, aminoPlus: bool = True, autoRenew: bool = False):
@@ -1873,59 +1873,10 @@ class SubClient(client.Client):
     def invite_to_vc(self, chatId: str, userId: str):
         data = json.dumps({})
 
-        #response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/member/{userId}/invite_av_chat", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        # response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/member/{userId}/invite_av_chat", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
-
-    def send_vc_informations(self):
-        while self.vc_connect:
-            data = VCHeaders()
-            self.client.socket.send(data)
-
-    def join_voice_chat(self, comId: str, chatId: str, joinType: int = 1):
-        data = {
-            "o": {
-                "ndcId": comId,
-                "threadId": chatId,
-                "joinRole": joinType,
-                "channelType": 1,
-                "id": "2154531"  # Need to change?
-            },
-            "t": 112  # ?
-        }
-        data = json.dumps(data)
-        self.client.socket.send(data)
-        Thread(target=self.send_vc_informations).start()
-        # response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-        # if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
-        # else: return response.status_code
-
-    def join_video_chat(self, comId: str, chatId: str, joinType: int = 1):
-        data = {
-            "o": {
-                "ndcId": comId,
-                "threadId": chatId,
-                "joinRole": joinType,
-                "channelType": 5,
-                "id": "2154531"  # Need to change?
-            },
-            "t": 108  # ?
-        }
-        data = json.dumps(data)
-        self.client.socket.send(data)
-        Thread(target=self.send_vc_informations).start()
-        # response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/{userId}", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-        # if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
-        # else: return response.status_code
-
-    def leave_voice_chat(self):
-        # need to complete
-        self.vc_connect = False
-
-    def leave_video_chat(self):
-        # need to complete
-        self.vc_connect = False
 
     def add_poll_option(self, blogId: str, question: str):
         data = json.dumps({

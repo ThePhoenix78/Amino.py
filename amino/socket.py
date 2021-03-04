@@ -8,6 +8,7 @@ from sys import _getframe as getframe
 
 from .lib.util import objects
 
+
 class SocketHandler:
     def __init__(self, client, socket_trace = False, debug = False):
         # websocket.enableTrace(True)
@@ -22,11 +23,9 @@ class SocketHandler:
         self.socket_stop = False
         self.socketDelay = 0
         self.socket_trace = socket_trace
-        self.socketDelayFetch = 60  # Reconnects every 60 seconds.
-        #threading.Thread(target=self.reconnect_handler).start()
-        #websocket.enableTrace(socket_trace)
+        self.socketDelayFetch = 60 # Reconnects every 60 seconds.
 
-    def run(self):
+    def run_socket(self):
         threading.Thread(target=self.reconnect_handler).start()
         websocket.enableTrace(self.socket_trace)
 

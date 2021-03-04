@@ -15,16 +15,17 @@ from .socket import Callbacks, SocketHandler
 
 device = device.DeviceGenerator()
 
-class Client:
-    def __init__(self, callback = Callbacks, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
+class Client(Callbacks, SocketHandler):
+    def __init__(self, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
         self.api = "https://service.narvii.com/api/v1"
         self.authenticated = False
         self.configured = False
         self.user_agent = device.user_agent
         self.device_id = device.device_id
         self.device_id_sig = device.device_id_sig
-        self.socket = SocketHandler(self, socket_trace=socket_trace, debug=socketDebugging)
-        self.callbacks = callback(self)
+        SocketHandler.__init__(self, self, socket_trace=socket_trace, debug=socketDebugging)
+        Callbacks.__init__(self, self)
+        print("hey")
         self.proxies = proxies
         self.certificatePath = certificatePath
 
@@ -35,6 +36,37 @@ class Client:
         self.profile: objects.UserProfile = objects.UserProfile(None)
 
         self.check_device(device.device_id)
+
+    def join_voice_chat(self, chatId: str, comId: str, joinType: int = 1):
+        # Made by Light, Ley and Phoenix
+
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 112 
+        }
+        data = json.dumps(data)
+        self.send(data)
+
+    def join_video_chat(self, chatId: str, joinType: int = 1):
+        # Made by Light, Ley and Phoenix
+
+        data = {
+            "o": {
+                "ndcId": self.comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "channelType": 5,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 108
+        }
+        data = json.dumps(data)
+        self.send(data)
 
     def login_sid(self, SID: str):
         """
@@ -50,8 +82,8 @@ class Client:
         self.account: objects.UserProfile = self.get_user_info(uId)
         self.profile: objects.UserProfile = self.get_user_info(uId)
         headers.sid = self.sid
-        self.socket.start()
-        self.socket.run()
+        self.start()
+        self.run_socket()
 
     def login(self, email: str, password: str):
         """
@@ -77,7 +109,7 @@ class Client:
         })
 
         response = requests.post(f"{self.api}/g/s/auth/login", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-        self.socket.run()
+        self.run_socket()
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
 
         else:
@@ -88,7 +120,7 @@ class Client:
             self.account: objects.UserProfile = objects.UserProfile(self.json["account"]).UserProfile
             self.profile: objects.UserProfile = objects.UserProfile(self.json["userProfile"]).UserProfile
             headers.sid = self.sid
-            self.socket.start()
+            self.start()
             return response.status_code
 
     def register(self, nickname: str, email: str, password: str, deviceId: str = device.device_id):
@@ -178,7 +210,7 @@ class Client:
             self.account: None
             self.profile: None
             headers.sid = None
-            self.socket.close()
+            self.close()
             return response.status_code
 
     def configure(self, age: int, gender: str):
@@ -398,7 +430,7 @@ class Client:
         else: return json.loads(response.text)["mediaValue"]
 
     def handle_socket_message(self, data):
-        return self.callbacks.resolve(data)
+        return self.resolve(data)
 
     def get_eventlog(self):
         response = requests.get(f"{self.api}/g/s/eventlog/profile?language=en", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
