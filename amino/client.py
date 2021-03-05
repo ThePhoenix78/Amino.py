@@ -26,7 +26,6 @@ class Client(Callbacks, SocketHandler):
         self.device_id_sig = device.device_id_sig
         SocketHandler.__init__(self, self, socket_trace=socket_trace, debug=socketDebugging)
         Callbacks.__init__(self, self)
-        print("hey")
         self.proxies = proxies
         self.certificatePath = certificatePath
 
