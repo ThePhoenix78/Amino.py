@@ -15,6 +15,7 @@ from .socket import Callbacks, SocketHandler
 
 device = device.DeviceGenerator()
 
+
 class Client(Callbacks, SocketHandler):
     def __init__(self, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
         self.api = "https://service.narvii.com/api/v1"
@@ -47,7 +48,7 @@ class Client(Callbacks, SocketHandler):
                 "joinRole": joinType,
                 "id": "2154531"  # Need to change?
             },
-            "t": 112 
+            "t": 112
         }
         data = json.dumps(data)
         self.send(data)
