@@ -1870,14 +1870,14 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-def invite_to_vc(self, chatId: str, userId: str):
-        data = json.dumps({
-            'uid' : userId
-        })
+    def invite_to_vc(self, chatId: str, userId: str):
+            data = json.dumps({
+                'uid' : userId
+            })
 
-        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
-        else: return response.status_code
+            response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+            if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+            else: return response.status_code
 
     def add_poll_option(self, blogId: str, question: str):
         data = json.dumps({
