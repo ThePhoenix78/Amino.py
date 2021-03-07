@@ -37,7 +37,7 @@ class Client(Callbacks, SocketHandler):
 
         self.check_device(device.device_id)
 
-    def join_voice_chat(self, chatId: str, comId: str, joinType: int = 1):
+    def join_voice_chat(self, comId: str, chatId: str, joinType: int = 1):
         # Made by Light, Ley and Phoenix
 
         data = {
@@ -52,12 +52,12 @@ class Client(Callbacks, SocketHandler):
         data = json.dumps(data)
         self.send(data)
 
-    def join_video_chat(self, chatId: str, joinType: int = 1):
+    def join_video_chat(self, comId: str, chatId: str, joinType: int = 1):
         # Made by Light, Ley and Phoenix
 
         data = {
             "o": {
-                "ndcId": self.comId,
+                "ndcId": comId,
                 "threadId": chatId,
                 "joinRole": joinType,
                 "channelType": 5,
@@ -1891,3 +1891,12 @@ class Client(Callbacks, SocketHandler):
     def link_identify(self, code: str):
         response = requests.get(f"{self.api}/g/s/community/link-identify?q=http%3A%2F%2Faminoapps.com%2Finvite%2F{code}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         return json.loads(response.text)
+
+    def invite_to_vc(self, chatId: str, userId: str):
+        data = json.dumps({
+            "uid": userId
+        })
+
+        response = requests.post(f"{self.api}/g/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code

@@ -759,6 +759,13 @@ class ReasonNeeded(Exception):
         Exception.__init__(*args, **kwargs)
 
 
+class TransferRequestNeeded(Exception):
+    """
+    Raised when you need to transfer host to complete the action.
+    """
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
+
 class LibraryUpdateAvailable(Exception):
     """
     Raised when a new library update is available.

@@ -932,11 +932,10 @@ class SubClient(client.Client):
         else: return response.status_code
 
     def accept_organizer(self, chatId: str):
-
         chat_thread = self.get_chat_thread(chatId).json
         transferRequest = chat_thread['extensions'].get('organizerTransferRequest')
-        if(not transferRequest):
-            raise exceptions.TransferRequestNeeded
+        if not transferRequest:
+            raise exceptions.TransferRequestNeeded()
 
         self.accept_host(chatId)
 
@@ -1862,7 +1861,7 @@ class SubClient(client.Client):
                 "applyToAll": 0,
                 "timestamp": int(timestamp() * 1000)}
 
-        if applyToAll: data['applyToAll'] = 1
+        if applyToAll: data["applyToAll"] = 1
 
         data = json.dumps(data)
 
@@ -1871,6 +1870,7 @@ class SubClient(client.Client):
         else: return response.status_code
 
     def invite_to_vc(self, chatId: str, userId: str):
+<<<<<<< HEAD
             data = json.dumps({
                 'uid' : userId
             })
@@ -1878,6 +1878,15 @@ class SubClient(client.Client):
             response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
             if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
             else: return response.status_code
+=======
+        data = json.dumps({
+            "uid": userId
+        })
+
+        response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+>>>>>>> 42164402304aeddc607ad15f85af8622f115afae
 
     def add_poll_option(self, blogId: str, question: str):
         data = json.dumps({
