@@ -100,21 +100,6 @@ class ACM(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def get_pending_promotion2(self, size: int = 25):
-
-        if self.comId is None: raise exceptions.CommunityNeeded()
-        response = requests.post(f"{self.api}/x{self.comId}/s/notice?size={size}&status=1&type=management", headers=headers.Headers().headers)
-        if response.status_code == 200: return response.status_code
-        else: return json.loads(response.text)
-
-    def reject_promote(self, userId: str):
-        data = json.dumps({"Method": "DELETE"})
-
-        if self.comId is None: raise exceptions.CommunityNeeded()
-        response = requests.post(f"{self.api}/x{self.comId}/s/notice/{userId}", headers=headers.Headers(data=data).headers, data=data)
-        if response.status_code == 200: return response.status_code
-        else: return json.loads(response.text)
-
     def get_join_requests(self, start: int = 0, size: int = 25):
         if self.comId is None: raise exceptions.CommunityNeeded()
 
