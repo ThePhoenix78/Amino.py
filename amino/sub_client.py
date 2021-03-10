@@ -17,22 +17,6 @@ device = device.DeviceGenerator()
 headers.sid = client.Client().sid
 
 
-class VCHeaders:
-    def __init__(self, data = None):
-        vc_headers = {
-            "Accept-Language": "en-US",
-            "Content-Type": "application/json",
-            "User-Agent": "Amino/45725 CFNetwork/1126 Darwin/19.5.0",  # Closest server (this one for me)
-            "Host": "rt.applovin.com",
-            "Accept-Encoding": "gzip, deflate, br",
-            "Connection": "Keep-Alive",
-            "Accept": "*/*"
-        }
-
-        if data: vc_headers["Content-Length"] = str(len(data))
-        self.vc_headers = vc_headers
-
-
 class SubClient(client.Client):
     def __init__(self, comId: str = None, aminoId: str = None, *, profile: objects.UserProfile):
         client.Client.__init__(self)
@@ -1870,23 +1854,12 @@ class SubClient(client.Client):
         else: return response.status_code
 
     def invite_to_vc(self, chatId: str, userId: str):
-<<<<<<< HEAD
-            data = json.dumps({
-                'uid' : userId
-            })
-
-            response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
-            if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
-            else: return response.status_code
-=======
-        data = json.dumps({
-            "uid": userId
-        })
+        data = json.dumps({'uid' : userId})
 
         response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
->>>>>>> 42164402304aeddc607ad15f85af8622f115afae
+
 
     def add_poll_option(self, blogId: str, question: str):
         data = json.dumps({
