@@ -3581,3 +3581,85 @@ class WikiRequestList:
             except (KeyError, TypeError): self.responseMessage.append(None)
 
         return self
+
+class NoticeList:
+    def __init__(self, data):
+        _author, _targetUser = [], []
+
+        self.json = data
+
+        for y in data:
+            try: _author.append(y["operator"])
+            except (KeyError, TypeError): _author.append(None)
+            try: _targetUser.append(y["targetUser"])
+            except (KeyError, TypeError): _targetUser.append(None)
+
+        self.author: UserProfileList = UserProfileList(_author).UserProfileList
+        self.targetUser: UserProfileList = UserProfileList(_targetUser).UserProfileList
+
+        self.title = []
+        self.icon = []
+        self.noticeId = []
+        self.status = []
+        self.comId = []
+        self.modifiedTime = []
+        self.createdTime = []
+        self.extensions = []
+        self.content = []
+        self.community = []
+        self.type = []
+        self.notificationId = []
+        self.authorId = []
+        self.style = []
+        self.backgroundColor = []
+        self.config = []
+        self.showCommunity = []
+        self.showAuthor = []
+        self.allowQuickOperation = []
+        self.operationList = []
+
+    @property
+    def NoticeList(self):
+        for x in self.json:
+            try: self.title.append(x["title"])
+            except (KeyError, TypeError): self.title.append(None)
+            try: self.icon.append(x["icon"])
+            except (KeyError, TypeError): self.icon.append(None)
+            try: self.noticeId.append(x["noticeId"])
+            except (KeyError, TypeError): self.noticeId.append(None)
+            try: self.status.append(x["status"])
+            except (KeyError, TypeError): self.status.append(None)
+            try: self.comId.append(x["ndcId"])
+            except (KeyError, TypeError): self.comId.append(None)
+            try: self.modifiedTime.append(x["modifiedTime"])
+            except (KeyError, TypeError): self.modifiedTime.append(None)
+            try: self.createdTime.append(x["createdTime"])
+            except (KeyError, TypeError): self.createdTime.append(None)
+            try: self.extensions.append(x["extensions"])
+            except (KeyError, TypeError): self.extensions.append(None)
+            try: self.authorId.append(x["extensions"]["operatorUid"])
+            except (KeyError, TypeError): self.authorId.append(None)
+            try: self.config.append(x["extensions"]["config"])
+            except (KeyError, TypeError): self.config.append(None)
+            try: self.showCommunity.append(x["extensions"]["config"]["showCommunity"])
+            except (KeyError, TypeError): self.showCommunity.append(None)
+            try: self.showAuthor.append(x["extensions"]["config"]["showOperator"])
+            except (KeyError, TypeError): self.showAuthor.append(None)
+            try: self.allowQuickOperation.append(x["extensions"]["config"]["allowQuickOperation"])
+            except (KeyError, TypeError): self.allowQuickOperation.append(None)
+            try: self.operationList.append(x["extensions"]["config"]["operationList"])
+            except (KeyError, TypeError): self.operationList.append(None)
+            try: self.style.append(x["extensions"]["style"])
+            except (KeyError, TypeError): self.style.append(None)
+            try: self.backgroundColor.append(x["extensions"]["style"]["backgroundColor"])
+            except (KeyError, TypeError): self.backgroundColor.append(None)
+            try: self.content.append(x["content"])
+            except (KeyError, TypeError): self.content.append(None)
+            try: self.community.append(x["community"])
+            except (KeyError, TypeError): self.community.append(None)
+            try: self.type.append(x["type"])
+            except (KeyError, TypeError): self.type.append(None)
+            try: self.notificationId.append(x["notificationId"])
+            except (KeyError, TypeError): self.notificationId.append(None)
+
+        return self

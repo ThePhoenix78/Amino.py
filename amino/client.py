@@ -38,6 +38,14 @@ class Client(Callbacks, SocketHandler):
         self.check_device(device.device_id)
 
     def join_voice_chat(self, comId: str, chatId: str, joinType: int = 1):
+        """
+        Joins a Voice Chat
+
+        **Parameters**
+            - **comId** : ID of the Community
+            - **chatId** : ID of the Chat
+        """
+
         # Made by Light, Ley and Phoenix
 
         data = {
@@ -53,6 +61,14 @@ class Client(Callbacks, SocketHandler):
         self.send(data)
 
     def join_video_chat(self, comId: str, chatId: str, joinType: int = 1):
+        """
+        Joins a Video Chat
+
+        **Parameters**
+            - **comId** : ID of the Community
+            - **chatId** : ID of the Chat
+        """
+
         # Made by Light, Ley and Phoenix
 
         data = {
@@ -1893,6 +1909,19 @@ class Client(Callbacks, SocketHandler):
         return json.loads(response.text)
 
     def invite_to_vc(self, chatId: str, userId: str):
+        """
+        Invite a User to a Voice Chat
+
+        **Parameters**
+            - **chatId** - ID of the Chat
+            - **userId** - ID of the User
+
+        **Returns**
+            - **Success** : 200 (int)
+
+            - **Fail** : :meth:`Exceptions <amino.lib.util.exceptions>`
+        """
+
         data = json.dumps({
             "uid": userId
         })

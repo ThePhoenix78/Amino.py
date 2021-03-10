@@ -1854,7 +1854,7 @@ class SubClient(client.Client):
         else: return response.status_code
 
     def invite_to_vc(self, chatId: str, userId: str):
-        data = json.dumps({'uid' : userId})
+        data = json.dumps({'uid': userId})
 
         response = requests.post(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/vvchat-presenter/invite/", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))

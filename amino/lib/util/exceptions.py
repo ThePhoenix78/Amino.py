@@ -511,6 +511,15 @@ class ChatViewOnly(Exception):
     def __init__(*args, **kwargs):
         Exception.__init__(*args, **kwargs)
 
+class ChatMessageTooBig(Exception):
+    """
+    - **API Code** : 1664
+    - **API Message** : ``Unknown Message``
+    - **API String** : API_ERR_CHAT_MESSAGE_CONTENT_TOO_LONG
+    """
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
+
 class InviteCodeNotFound(Exception):
     """
     - **API Code** : 1900
@@ -849,6 +858,7 @@ def CheckException(data):
     elif api_code == 1637: raise MemberKickedByOrganizer(data)
     elif api_code == 1661: raise LevelFiveRequiredToEnableProps(data)
     elif api_code == 1663: raise ChatViewOnly(data)
+    elif api_code == 1664: raise ChatMessageTooBig(data)
     elif api_code == 1900: raise InviteCodeNotFound(data)
     elif api_code == 2001: raise AlreadyRequestedJoinCommunity(data)
     elif api_code == 2501: raise API_ERR_PUSH_SERVER_LIMITATION_APART(data)
