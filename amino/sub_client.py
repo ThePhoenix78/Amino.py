@@ -382,15 +382,21 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def send_active_obj(self, startTime: int, endTime: int, optInAdsFlags: int = 2147483647, tz: int = -timezone // 1000):
-        data = json.dumps({
+    def send_active_obj(self, startTime: int = None, endTime: int = None, optInAdsFlags: int = 2147483647, tz: int = -timezone // 1000, timers: list = None, timestamp: int = int(timestamp() * 1000)):
+        data = {
             "userActiveTimeChunkList": [{
                 "start": startTime,
                 "end": endTime
             }],
+            "timestamp": timestamp,
             "optInAdsFlags": optInAdsFlags,
             "timezone": tz
-        })
+        }
+
+        if timers:
+            data["userActiveTimeChunkList"] = timers
+
+        data = json.dumps(data)
 
         response = requests.post(f"{self.api}/x{self.comId}/s/community/stats/user-active-time", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))

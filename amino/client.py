@@ -1,10 +1,11 @@
 import json
 import base64
 import requests
+import threading
 
 from uuid import UUID
 from os import urandom
-from time import timezone
+from time import timezone, sleep
 from typing import BinaryIO
 from binascii import hexlify
 from time import time as timestamp
@@ -80,6 +81,61 @@ class Client(Callbacks, SocketHandler):
                 "id": "2154531"  # Need to change?
             },
             "t": 108
+        }
+        data = json.dumps(data)
+        self.send(data)
+
+    def run_vc(self):
+        while self.active:
+            data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 112
+            }
+            data = json.dumps(data)
+            self.send(data)
+            sleep(1)
+
+    def start_vc(self, comId: str, chatId: str, joinType: int = 1):
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 112
+        }
+        data = json.dumps(data)
+        self.send(data)
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "channelType": 1,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 108
+        }
+        data = json.dumps(data)
+        self.send(data)
+        self.active = True
+        threading.Thread(target=self.run_vc)
+
+    def end_vc(self, comId: str, chatId: str, joinType: int = 2):
+        self.active = False
+        data = {
+            "o": {
+                "ndcId": comId,
+                "threadId": chatId,
+                "joinRole": joinType,
+                "id": "2154531"  # Need to change?
+            },
+            "t": 112
         }
         data = json.dumps(data)
         self.send(data)

@@ -20,7 +20,6 @@ class SocketHandler:
         self.socket = None
         self.socket_thread = None
         self.reconnect = True
-        self.socket_stop = False
         self.socketDelay = 0
         self.socket_trace = socket_trace
         self.socketDelayFetch = 120  # Reconnects every 120 seconds.
@@ -116,7 +115,6 @@ class SocketHandler:
 
         self.reconnect = False
         self.active = False
-        self.socket_stop = True
         try:
             self.socket.close()
         except Exception as closeError:
