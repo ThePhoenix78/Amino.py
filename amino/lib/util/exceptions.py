@@ -447,6 +447,16 @@ class ReachedMaxPollOptions(Exception):
     """
     def __init__(*args, **kwargs):
         Exception.__init__(*args, **kwargs)
+        
+class TooManyChats(Exception):
+    """
+    - **API Code** : 1602
+    - **API Message** : Sorry, you can only have up to 1000 chat sessions.
+    - **API String** : ``Unknown String``
+    """
+
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
 
 class ChatFull(Exception):
     """
@@ -860,6 +870,7 @@ def CheckException(data):
     elif api_code == 833: raise CommunityDeleted(data)
     elif api_code == 1501: raise DuplicatePollOption(data)
     elif api_code == 1507: raise ReachedMaxPollOptions(data)
+    elif api_code == 1602: raise TooManyChats(data)
     elif api_code == 1605: raise ChatFull(data)
     elif api_code == 1611: raise ChatInvitesDisabled(data)
     elif api_code == 1612: raise RemovedFromChat(data)
