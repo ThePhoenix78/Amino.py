@@ -466,6 +466,15 @@ class ChatFull(Exception):
     """
     def __init__(*args, **kwargs):
         Exception.__init__(*args, **kwargs)
+        
+class TooManyInviteUsers(Exception):
+    """
+    - **API Code** : 1606
+    - **API Message** : Sorry, you can only invite up to 999 people.
+    - **API String** : ``Unknown String``
+    """
+    def __init__(*args, **kwargs):
+        Exception.__init__(*args, **kwargs)
 
 class ChatInvitesDisabled(Exception):
     """
@@ -872,6 +881,7 @@ def CheckException(data):
     elif api_code == 1507: raise ReachedMaxPollOptions(data)
     elif api_code == 1602: raise TooManyChats(data)
     elif api_code == 1605: raise ChatFull(data)
+    elif api_code == 1606: raise TooManyInviteUsers(data)
     elif api_code == 1611: raise ChatInvitesDisabled(data)
     elif api_code == 1612: raise RemovedFromChat(data)
     elif api_code == 1613: raise UserNotJoined(data)
