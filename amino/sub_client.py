@@ -57,11 +57,18 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def post_blog(self, title: str, content: str, imageList: list = None, categoriesList: list = None, backgroundColor: str = None, fansOnly: bool = False, extensions: dict = None):
+    def post_blog(self, title: str, content: str, imageList: list = None, captionList: list = None, categoriesList: list = None, backgroundColor: str = None, fansOnly: bool = False, extensions: dict = None, crash: bool = False):
         mediaList = []
 
-        for image in imageList:
-            mediaList.append([100, self.upload_media(image, "image"), None])
+        if captionList is not None:
+            for image, caption in zip(imageList, captionList):
+                mediaList.append([100, self.upload_media(image, "image"), caption])
+
+        else:
+            if imageList is not None:
+                for image in imageList:
+                    print(self.upload_media(image, "image"))
+                    mediaList.append([100, self.upload_media(image, "image"), None])
 
         data = {
             "address": None,
@@ -159,7 +166,7 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def check_in(self, tz: str = -timezone // 1000):
+    def check_in(self, tz: int = -timezone // 1000):
         data = json.dumps({
             "timezone": tz,
             "timestamp": int(timestamp() * 1000)
@@ -179,7 +186,7 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def lottery(self, tz: str = -timezone // 1000):
+    def lottery(self, tz: int = -timezone // 1000):
         data = json.dumps({
             "timezone": tz,
             "timestamp": int(timestamp() * 1000)
@@ -193,7 +200,7 @@ class SubClient(client.Client):
         data = {"timestamp": int(timestamp() * 1000)}
 
         if nickname: data["nickname"] = nickname
-        if icon: data["icon"] = icon
+        if icon: data["icon"] = self.upload_media(icon, "image")
         if content: data["content"] = content
         if mediaList: data["mediaList"] = mediaList
         if chatRequestPrivilege: data["extensions"] = {"privilegeOfChatInviteRequest": chatRequestPrivilege}
@@ -400,7 +407,6 @@ class SubClient(client.Client):
 
         response = requests.post(f"{self.api}/x{self.comId}/s/community/stats/user-active-time", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
-        else: return response.status_code
 
     def activity_status(self, status: str):
         if "on" in status.lower(): status = 1

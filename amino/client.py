@@ -51,7 +51,7 @@ class Client(Callbacks, SocketHandler):
 
         data = {
             "o": {
-                "ndcId": comId,
+                "ndcId": int(comId),
                 "threadId": chatId,
                 "joinRole": joinType,
                 "id": "2154531"  # Need to change?
@@ -74,7 +74,7 @@ class Client(Callbacks, SocketHandler):
 
         data = {
             "o": {
-                "ndcId": comId,
+                "ndcId": int(comId),
                 "threadId": chatId,
                 "joinRole": joinType,
                 "channelType": 5,
@@ -85,16 +85,30 @@ class Client(Callbacks, SocketHandler):
         data = json.dumps(data)
         self.send(data)
 
+    def join_video_chat_as_viewer(self, comId: str, chatId: str):
+        data = {
+            "o":
+                {
+                    "ndcId": int(comId),
+                    "threadId": chatId,
+                    "joinRole": 2,
+                    "id": "72446"
+                },
+            "t": 112
+        }
+        data = json.dumps(data)
+        self.send(data)
+
     def run_vc(self, comId: str, chatId: str, joinType: str):
         while self.active:
             data = {
-            "o": {
-                "ndcId": comId,
-                "threadId": chatId,
-                "joinRole": joinType,
-                "id": "2154531"  # Need to change?
-            },
-            "t": 112
+                "o": {
+                    "ndcId": comId,
+                    "threadId": chatId,
+                    "joinRole": joinType,
+                    "id": "2154531"  # Need to change?
+                },
+                "t": 112
             }
             data = json.dumps(data)
             self.send(data)
@@ -195,7 +209,7 @@ class Client(Callbacks, SocketHandler):
             self.start()
             return response.status_code
 
-    def register(self, nickname: str, email: str, password: str, deviceId: str = device.device_id):
+    def register(self, nickname: str, email: str, password: str, verificationCode: str, deviceId: str = device.device_id):
         """
         Register an account.
 
@@ -203,6 +217,7 @@ class Client(Callbacks, SocketHandler):
             - **nickname** : Nickname of the account.
             - **email** : Email of the account.
             - **password** : Password of the account.
+            - **verificationCode** : Verification code.
             - **deviceId** : The device id being registered to.
 
         **Returns**
@@ -210,6 +225,7 @@ class Client(Callbacks, SocketHandler):
 
             - **Fail** : :meth:`Exceptions <amino.lib.util.exceptions>`
         """
+
         data = json.dumps({
             "secret": f"0 {password}",
             "deviceID": deviceId,
@@ -220,6 +236,13 @@ class Client(Callbacks, SocketHandler):
             "longitude": 0,
             "address": None,
             "clientCallbackURL": "narviiapp://relogin",
+            "validationContext": {
+                "data": {
+                    "code": verificationCode
+                },
+                "type": 1,
+                "identity": email
+            },
             "type": 1,
             "identity": email,
             "timestamp": int(timestamp() * 1000)
@@ -477,6 +500,11 @@ class Client(Callbacks, SocketHandler):
         response = requests.post(f"{self.api}/g/s/device", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: self.configured = True; return response.status_code
+
+    def get_account_info(self):
+        response = requests.get(f"{self.api}/g/s/account", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return objects.UserProfile(json.loads(response.text)["account"]).UserProfile
 
     def upload_media(self, file: BinaryIO, fileType: str):
         """
@@ -1400,14 +1428,14 @@ class Client(Callbacks, SocketHandler):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
-    def edit_profile(self, nickname: str = None, content: str = None, icon: str = None, backgroundColor: str = None, backgroundImage: str = None, defaultBubbleId: str = None):
+    def edit_profile(self, nickname: str = None, content: str = None, icon: BinaryIO = None, backgroundColor: str = None, backgroundImage: str = None, defaultBubbleId: str = None):
         """
         Edit account's Profile.
 
         **Parameters**
             - **nickname** : Nickname of the Profile.
             - **content** : Biography of the Profile.
-            - **icon** : Url of the Icon of the Profile.
+            - **icon** : Icon of the Profile.
             - **backgroundImage** : Url of the Background Picture of the Profile.
             - **backgroundColor** : Hexadecimal Background Color of the Profile.
             - **defaultBubbleId** : Chat bubble ID.
@@ -1427,7 +1455,7 @@ class Client(Callbacks, SocketHandler):
         }
 
         if nickname: data["nickname"] = nickname
-        if icon: data["icon"] = icon
+        if icon: data["icon"] = self.upload_media(icon, "image")
         if content: data["content"] = content
         if backgroundColor: data["extensions"] = {"style": {"backgroundColor": backgroundColor}}
         if backgroundImage: data["extensions"] = {"style": {"backgroundMediaList": [[100, backgroundImage, None, None, None]]}}
