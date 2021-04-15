@@ -1953,6 +1953,15 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
+    def create_shared_folder(self,title: str):
+        data = json.dumps({
+                "title":title,
+                "timestamp":int(timestamp() * 1000)
+            })
+        response = requests.post(f"{self.api}/x{self.comId}/s/shared-folder/folders", headers=headers.Headers(data=data).headers,data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
     def submit_to_wiki(self, wikiId: str, message: str):
         data = json.dumps({
             "message": message,
