@@ -11,7 +11,7 @@
 
 
 #### What Is This?
-Amino.py Is A Python API For Communicating With Amino Servers Whilst Pretending That You Are An App User. This Is Mostly Accomplished By Spoofing Device Configuration Headers. It Is Also For Objectifying And Organizing Amino Response Data, So That Actually Doing Anything Is Easier.
+Amino.py Is A Python API For Communicating With Amino Servers Whilst Pretending That You're An App User. This Is Mostly Accomplished By Spoofing Device Configuration Headers. It Is Also For Objectifying And Organizing Amino Response Data, So That Actually Doing Anything Is Easier.
 
 ### API Reference
 Read The Docs: [Link Here](https://aminopy.readthedocs.io/en/latest/)
