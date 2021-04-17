@@ -7,7 +7,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Index &mdash; Amino.py 1.2.12.1 documentation</title>
+  <title>Index &mdash; Amino.py 1.2.15 documentation</title>
   
 
   
@@ -387,6 +387,8 @@
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.ChatInvitesDisabled">ChatInvitesDisabled</a>
 </li>
+      <li><a href="amino.html#amino.lib.util.exceptions.ChatMessageTooBig">ChatMessageTooBig</a>
+</li>
       <li><a href="amino.html#amino.lib.util.exceptions.ChatRequestsBlocked">ChatRequestsBlocked</a>
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.ChatViewOnly">ChatViewOnly</a>
@@ -431,6 +433,8 @@
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.CommunityDeleted">CommunityDeleted</a>
 </li>
+      <li><a href="amino.html#amino.lib.util.exceptions.CommunityDisabled">CommunityDisabled</a>
+</li>
       <li><a href="amino.html#amino.lib.util.objects.CommunityList">CommunityList (class in amino.lib.util.objects)</a>
 </li>
       <li><a href="amino.html#amino.lib.util.objects.CommunityList.CommunityList">CommunityList() (amino.lib.util.objects.CommunityList property)</a>
@@ -463,7 +467,7 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.lib.util.helpers.decode_base64">decode_base64() (in module amino.lib.util.helpers)</a>
+      <li><a href="amino.html#amino.lib.util.helpers.decode_sid">decode_sid() (in module amino.lib.util.helpers)</a>
 </li>
       <li><a href="amino.html#amino.socket.Callbacks.default">default() (amino.socket.Callbacks method)</a>
 </li>
@@ -479,10 +483,10 @@
       </ul></li>
       <li><a href="amino.html#amino.acm.ACM.delete_community">delete_community() (amino.acm.ACM method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="amino.html#amino.sub_client.SubClient.delete_invite_code">delete_invite_code() (amino.sub_client.SubClient method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="amino.html#amino.client.Client.delete_message">delete_message() (amino.client.Client method)</a>
 
       <ul>
@@ -490,6 +494,8 @@
 </li>
       </ul></li>
       <li><a href="amino.html#amino.sub_client.SubClient.delete_notification">delete_notification() (amino.sub_client.SubClient method)</a>
+</li>
+      <li><a href="amino.html#amino.acm.ACM.delete_pending_role">delete_pending_role() (amino.acm.ACM method)</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.delete_wiki">delete_wiki() (amino.sub_client.SubClient method)</a>
 </li>
@@ -526,6 +532,8 @@
       <li><a href="amino.html#amino.sub_client.SubClient.edit_titles">edit_titles() (amino.sub_client.SubClient method)</a>
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.EmailAlreadyTaken">EmailAlreadyTaken</a>
+</li>
+      <li><a href="amino.html#amino.client.Client.end_vc">end_vc() (amino.client.Client method)</a>
 </li>
       <li><a href="amino.html#amino.lib.util.objects.Event">Event (class in amino.lib.util.objects)</a>
 </li>
@@ -580,6 +588,8 @@
       <li><a href="amino.html#amino.lib.util.helpers.generate_device_info">generate_device_info() (in module amino.lib.util.helpers)</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.generate_invite_code">generate_invite_code() (amino.sub_client.SubClient method)</a>
+</li>
+      <li><a href="amino.html#amino.client.Client.get_account_info">get_account_info() (amino.client.Client method)</a>
 </li>
       <li><a href="amino.html#amino.client.Client.get_all_users">get_all_users() (amino.client.Client method)</a>
 
@@ -679,6 +689,8 @@
         <li><a href="amino.html#amino.sub_client.SubClient.get_message_info">(amino.sub_client.SubClient method)</a>
 </li>
       </ul></li>
+      <li><a href="amino.html#amino.acm.ACM.get_notice_list">get_notice_list() (amino.acm.ACM method)</a>
+</li>
       <li><a href="amino.html#amino.sub_client.SubClient.get_notices">get_notices() (amino.sub_client.SubClient method)</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.get_notifications">get_notifications() (amino.sub_client.SubClient method)</a>
@@ -687,10 +699,10 @@
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.get_online_users">get_online_users() (amino.sub_client.SubClient method)</a>
 </li>
-      <li><a href="amino.html#amino.sub_client.SubClient.get_public_chat_threads">get_public_chat_threads() (amino.sub_client.SubClient method)</a>
-</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="amino.html#amino.sub_client.SubClient.get_public_chat_threads">get_public_chat_threads() (amino.sub_client.SubClient method)</a>
+</li>
       <li><a href="amino.html#amino.sub_client.SubClient.get_quiz_rankings">get_quiz_rankings() (amino.sub_client.SubClient method)</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.get_recent_blogs">get_recent_blogs() (amino.sub_client.SubClient method)</a>
@@ -883,9 +895,11 @@
       </ul></li>
       <li><a href="amino.html#amino.client.Client.join_community">join_community() (amino.client.Client method)</a>
 </li>
+      <li><a href="amino.html#amino.client.Client.join_video_chat">join_video_chat() (amino.client.Client method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.client.Client.join_video_chat">join_video_chat() (amino.client.Client method)</a>
+      <li><a href="amino.html#amino.client.Client.join_video_chat_as_viewer">join_video_chat_as_viewer() (amino.client.Client method)</a>
 </li>
       <li><a href="amino.html#amino.client.Client.join_voice_chat">join_voice_chat() (amino.client.Client method)</a>
 </li>
@@ -899,8 +913,12 @@
 <h2 id="K">K</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.sub_client.SubClient.kick">kick() (amino.sub_client.SubClient method)</a>
+      <li><a href="amino.html#amino.client.Client.kick">kick() (amino.client.Client method)</a>
+
+      <ul>
+        <li><a href="amino.html#amino.sub_client.SubClient.kick">(amino.sub_client.SubClient method)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1018,9 +1036,13 @@
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.NoImageSource">NoImageSource</a>
 </li>
+      <li><a href="amino.html#amino.lib.util.exceptions.NotEnoughCoins">NotEnoughCoins</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.lib.util.exceptions.NotEnoughCoins">NotEnoughCoins</a>
+      <li><a href="amino.html#amino.lib.util.objects.NoticeList">NoticeList (class in amino.lib.util.objects)</a>
+</li>
+      <li><a href="amino.html#amino.lib.util.objects.NoticeList.NoticeList">NoticeList() (amino.lib.util.objects.NoticeList property)</a>
 </li>
       <li><a href="amino.html#amino.lib.util.objects.NotificationList">NotificationList (class in amino.lib.util.objects)</a>
 </li>
@@ -1232,10 +1254,10 @@
 </li>
       <li><a href="amino.html#amino.acm.ACM.remove_influencer">remove_influencer() (amino.acm.ACM method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="amino.html#amino.client.Client.remove_linked_community">remove_linked_community() (amino.client.Client method)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="amino.html#amino.lib.util.exceptions.RemovedFromChat">RemovedFromChat</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient.reorder_featured_users">reorder_featured_users() (amino.sub_client.SubClient method)</a>
@@ -1254,6 +1276,8 @@
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.RequestedNoLongerExists">RequestedNoLongerExists</a>
 </li>
+      <li><a href="amino.html#amino.lib.util.exceptions.RequestRejected">RequestRejected</a>
+</li>
       <li><a href="amino.html#amino.socket.Callbacks.resolve">resolve() (amino.socket.Callbacks method)</a>
 </li>
       <li><a href="amino.html#amino.client.Client.restore">restore() (amino.client.Client method)</a>
@@ -1261,6 +1285,8 @@
       <li><a href="amino.html#amino.sub_client.SubClient.review_quiz_questions">review_quiz_questions() (amino.sub_client.SubClient method)</a>
 </li>
       <li><a href="amino.html#amino.socket.SocketHandler.run_socket">run_socket() (amino.socket.SocketHandler method)</a>
+</li>
+      <li><a href="amino.html#amino.client.Client.run_vc">run_vc() (amino.client.Client method)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -1290,6 +1316,8 @@
         <li><a href="amino.html#amino.sub_client.SubClient.send_message">(amino.sub_client.SubClient method)</a>
 </li>
       </ul></li>
+      <li><a href="amino.html#amino.lib.util.exceptions.ServiceUnderMaintenance">ServiceUnderMaintenance</a>
+</li>
       <li><a href="amino.html#amino.client.Client.set_amino_id">set_amino_id() (amino.client.Client method)</a>
 </li>
       <li><a href="amino.html#amino.client.Client.set_privacy_status">set_privacy_status() (amino.client.Client method)</a>
@@ -1304,16 +1332,12 @@
 </li>
       <li><a href="amino.html#amino.lib.util.helpers.sid_to_ip_address">sid_to_ip_address() (in module amino.lib.util.helpers)</a>
 </li>
-      <li><a href="amino.html#amino.lib.util.helpers.sid_to_ip_address_2">sid_to_ip_address_2() (in module amino.lib.util.helpers)</a>
-</li>
       <li><a href="amino.html#amino.lib.util.helpers.sid_to_uid">sid_to_uid() (in module amino.lib.util.helpers)</a>
-</li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.lib.util.helpers.sid_to_uid_2">sid_to_uid_2() (in module amino.lib.util.helpers)</a>
 </li>
       <li><a href="amino.html#amino.socket.SocketHandler">SocketHandler (class in amino.socket)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="amino.html#amino.lib.util.exceptions.SpecifyType">SpecifyType</a>
 </li>
       <li><a href="amino.html#amino.socket.SocketHandler.start">start() (amino.socket.SocketHandler method)</a>
@@ -1324,6 +1348,8 @@
         <li><a href="amino.html#amino.sub_client.SubClient.start_chat">(amino.sub_client.SubClient method)</a>
 </li>
       </ul></li>
+      <li><a href="amino.html#amino.client.Client.start_vc">start_vc() (amino.client.Client method)</a>
+</li>
       <li><a href="amino.html#amino.lib.util.objects.Sticker">Sticker (class in amino.lib.util.objects)</a>
 </li>
       <li><a href="amino.html#amino.lib.util.objects.Sticker.Sticker">Sticker() (amino.lib.util.objects.Sticker property)</a>
@@ -1343,6 +1369,8 @@
       <li><a href="amino.html#amino.sub_client.SubClient.strike">strike() (amino.sub_client.SubClient method)</a>
 </li>
       <li><a href="amino.html#amino.client.Client.sub_clients">sub_clients() (amino.client.Client method)</a>
+</li>
+      <li><a href="amino.html#amino.client.Client.sub_clients_profile">sub_clients_profile() (amino.client.Client method)</a>
 </li>
       <li><a href="amino.html#amino.sub_client.SubClient">SubClient (class in amino.sub_client)</a>
 </li>
@@ -1370,9 +1398,13 @@
 </li>
       <li><a href="amino.html#amino.lib.util.objects.TippedUsersSummary">TippedUsersSummary (class in amino.lib.util.objects)</a>
 </li>
+      <li><a href="amino.html#amino.lib.util.objects.TippedUsersSummary.TippedUsersSummary">TippedUsersSummary() (amino.lib.util.objects.TippedUsersSummary property)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="amino.html#amino.lib.util.objects.TippedUsersSummary.TippedUsersSummary">TippedUsersSummary() (amino.lib.util.objects.TippedUsersSummary property)</a>
+      <li><a href="amino.html#amino.lib.util.exceptions.TooManyChats">TooManyChats</a>
+</li>
+      <li><a href="amino.html#amino.lib.util.exceptions.TooManyInviteUsers">TooManyInviteUsers</a>
 </li>
       <li><a href="amino.html#amino.lib.util.exceptions.TooManyRequests">TooManyRequests</a>
 </li>

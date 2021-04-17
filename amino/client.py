@@ -18,12 +18,15 @@ device = device.DeviceGenerator()
 
 
 class Client(Callbacks, SocketHandler):
-    def __init__(self, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
+    def __init__(self, deviceId: str = None, proxies: dict = None, certificatePath = None, socket_trace = False, socketDebugging = False):
         self.api = "https://service.narvii.com/api/v1"
         self.authenticated = False
         self.configured = False
         self.user_agent = device.user_agent
-        self.device_id = device.device_id
+
+        if deviceId is not None: self.device_id = deviceId
+        else: self.device_id = device.device_id
+
         self.device_id_sig = device.device_id_sig
         SocketHandler.__init__(self, self, socket_trace=socket_trace, debug=socketDebugging)
         Callbacks.__init__(self, self)
@@ -550,10 +553,16 @@ class Client(Callbacks, SocketHandler):
 
             - **Fail** : :meth:`Exceptions <amino.lib.util.exceptions>`
         """
-        if not self.authenticated: raise exceptions.NotLoggedIn
+        if not self.authenticated: raise exceptions.NotLoggedIn()
         response = requests.get(f"{self.api}/g/s/community/joined?v=1&start={start}&size={size}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.CommunityList(json.loads(response.text)["communityList"]).CommunityList
+
+    def sub_clients_profile(self, start: int = 0, size: int = 25):
+        if not self.authenticated: raise exceptions.NotLoggedIn()
+        response = requests.get(f"{self.api}/g/s/community/joined?v=1&start={start}&size={size}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return json.loads(response.text)["userInfoInCommunities"]
 
     def get_user_info(self, userId: str):
         """
@@ -604,7 +613,6 @@ class Client(Callbacks, SocketHandler):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.Thread(json.loads(response.text)["thread"]).Thread
 
-    # TODO : The documentation of this
     def get_chat_users(self, chatId: str, start: int = 0, size: int = 25):
         response = requests.get(f"{self.api}/g/s/chat/thread/{chatId}/member?start={start}&size={size}&type=default&cv=1.2", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
@@ -706,6 +714,13 @@ class Client(Callbacks, SocketHandler):
         })
 
         response = requests.post(f"{self.api}/g/s/chat/thread/{chatId}/member/invite", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def kick(self, userId: str, chatId: str, allowRejoin: bool = True):
+        if allowRejoin: allowRejoin = 1
+        if not allowRejoin: allowRejoin = 0
+        response = requests.delete(f"{self.api}/g/s/chat/thread/{chatId}/member/{userId}?allowRejoin={allowRejoin}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 

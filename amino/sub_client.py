@@ -196,13 +196,27 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.LotteryLog(json.loads(response.text)["lotteryLog"]).LotteryLog
 
-    def edit_profile(self, nickname: str = None, content: str = None, icon: str = None, chatRequestPrivilege: str = None, mediaList: list = None, backgroundImage: str = None, backgroundColor: str = None, titles: list = None, defaultBubbleId: str = None):
+    def edit_profile(self, nickname: str = None, content: str = None, icon: BinaryIO = None, chatRequestPrivilege: str = None, imageList: list = None, captionList: list = None, backgroundImage: str = None, backgroundColor: str = None, titles: list = None, defaultBubbleId: str = None):
+        mediaList = []
+
         data = {"timestamp": int(timestamp() * 1000)}
+
+        if captionList is not None:
+            for image, caption in zip(imageList, captionList):
+                mediaList.append([100, self.upload_media(image, "image"), caption])
+
+        else:
+            if imageList is not None:
+                for image in imageList:
+                    mediaList.append([100, self.upload_media(image, "image"), None])
+
+        if imageList is not None or captionList is not None:
+            data["mediaList"] = mediaList
 
         if nickname: data["nickname"] = nickname
         if icon: data["icon"] = self.upload_media(icon, "image")
         if content: data["content"] = content
-        if mediaList: data["mediaList"] = mediaList
+
         if chatRequestPrivilege: data["extensions"] = {"privilegeOfChatInviteRequest": chatRequestPrivilege}
         if backgroundImage: data["extensions"] = {"style": {"backgroundMediaList": [[100, backgroundImage, None, None, None]]}}
         if backgroundColor: data["extensions"] = {"style": {"backgroundColor": backgroundColor}}
@@ -973,7 +987,23 @@ class SubClient(client.Client):
         response = requests.delete(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}/member/{self.profile.userId}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
+        
+    def delete_chat(self, chatId: str):
+        """
+        Delete a Chat.
 
+        **Parameters**
+            - **chatId** : ID of the Chat.
+
+        **Returns**
+            - **Success** : 200 (int)
+
+            - **Fail** : :meth:`Exceptions <amino.lib.util.exceptions>`
+        """
+        response = requests.delete(f"{self.api}/x{self.comId}/s/chat/thread/{chatId}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+        
     def subscribe(self, userId: str, autoRenew: str = False, transactionId: str = None):
         if transactionId is None: transactionId = str(UUID(hexlify(urandom(16)).decode('ascii')))
 
@@ -1382,6 +1412,11 @@ class SubClient(client.Client):
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.BlogCategoryList(json.loads(response.text)["blogCategoryList"]).BlogCategoryList
 
+    def get_blogs_by_category(self, categoryId: str,start: int = 0, size: int = 25):
+        response = requests.get(f"{self.api}/x{self.comId}/s/blog-category/{categoryId}/blog-list?start={start}&size={size}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return objects.BlogList(json.loads(response.text)["blogList"]).BlogList
+
     def get_quiz_rankings(self, quizId: str, start: int = 0, size: int = 25):
         response = requests.get(f"{self.api}/x{self.comId}/s/blog/{quizId}/quiz/result?start={start}&size={size}", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
@@ -1445,6 +1480,11 @@ class SubClient(client.Client):
         response = requests.get(f"{self.api}/x{self.comId}/s/sticker-collection/{sticker_pack_id}?includeStickers=true", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return objects.StickerCollection(json.loads(response.text)["stickerCollection"]).StickerCollection
+
+    def get_sticker_packs(self):
+        response = requests.get(f"{self.api}/x{self.comId}/s/sticker-collection?includeStickers=false&type=my-active-collection", headers=headers.Headers().headers, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        return objects.StickerCollection(json.loads(response.text)["stickerCollection"]).StickerCollection
 
     # TODO : Finish this
     def get_store_chat_bubbles(self, start: int = 0, size: int = 25):
@@ -1897,6 +1937,15 @@ class SubClient(client.Client):
         })
 
         response = requests.post(f"{self.api}/x{self.comId}/s/item-category", headers=headers.Headers(data=data).headers, data=data, proxies=self.proxies, verify=self.certificatePath)
+        if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
+        else: return response.status_code
+
+    def create_shared_folder(self,title: str):
+        data = json.dumps({
+                "title":title,
+                "timestamp":int(timestamp() * 1000)
+            })
+        response = requests.post(f"{self.api}/x{self.comId}/s/shared-folder/folders", headers=headers.Headers(data=data).headers,data=data, proxies=self.proxies, verify=self.certificatePath)
         if response.status_code != 200: return exceptions.CheckException(json.loads(response.text))
         else: return response.status_code
 
