@@ -447,16 +447,6 @@ class ReachedMaxPollOptions(Exception):
     """
     def __init__(*args, **kwargs):
         Exception.__init__(*args, **kwargs)
-        
-class TooManyChats(Exception):
-    """
-    - **API Code** : 1602
-    - **API Message** : Sorry, you can only have up to 1000 chat sessions.
-    - **API String** : ``Unknown String``
-    """
-
-    def __init__(*args, **kwargs):
-        Exception.__init__(*args, **kwargs)
 
 class TooManyChats(Exception):
     """
@@ -472,15 +462,6 @@ class ChatFull(Exception):
     """
     - **API Code** : 1605
     - **API Message** : ``Unknown Message``
-    - **API String** : ``Unknown String``
-    """
-    def __init__(*args, **kwargs):
-        Exception.__init__(*args, **kwargs)
-        
-class TooManyInviteUsers(Exception):
-    """
-    - **API Code** : 1606
-    - **API Message** : Sorry, you can only invite up to 999 people.
     - **API String** : ``Unknown String``
     """
     def __init__(*args, **kwargs):
