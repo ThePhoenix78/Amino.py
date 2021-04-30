@@ -22,13 +22,13 @@ To Install It Just Open The Command Line And Type This Command `python3 -m pip i
 - **NOTE:** MAKE SURE YOU TYPE `Amino.py` **NOT** `Amino` AS IT WILL INSTALL THE **WRONG** PACKAGE!
 
 #### Pip Not Working?
-0. Make Sure Pip Is Installed See: [How To Set-Up Pip](https://nitratine.net/blog/post/how-to-setup-pythons-pip/) 
+0. Make Sure Pip Is Installed See: [How To Set-Up Pip](https://nitratine.net/blog/post/how-to-setup-pythons-pip/)
 1. Alternatively Download The API [HERE](https://github.com/Slimakoi/Amino.py/archive/refs/heads/master.zip)
 2. Extract The .zip File Either With [Winrar](https://www.win-rar.com/download.html?&L=0) or [7zip](https://www.7-zip.org/download.html)
 3. Open The Extracted Folder In An [IDE](https://visualstudio.microsoft.com/downloads/) Of Your Choosing
 And Navigate To The Folder Named `Amino.py-master`
 4. Select The Python Interpreter
-5. Make A New `*.py` File And Start Creating 
+5. Make A New `*.py` File And Start Creating
 
 [//]: # (*Verbose Instructions For Those Who Want To Start Programming But Don't Know How.)
 

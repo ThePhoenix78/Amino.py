@@ -842,6 +842,7 @@ def CheckException(data):
     elif api_code == 111: raise ServiceUnderMaintenance(data)
     elif api_code == 113: raise MessageNeeded(data)
     elif api_code == 200: raise InvalidAccountOrPassword(data)
+    elif api_code == 201: raise AccountDisabled(data)
     elif api_code == 213: raise InvalidEmail(data)
     elif api_code == 214: raise InvalidPassword(data)
     elif api_code == 215: raise EmailAlreadyTaken(data) and UnsupportedEmail(data)
