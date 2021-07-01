@@ -25,7 +25,7 @@ class SocketHandler:
         self.socket_trace = socket_trace
         self.socketDelayFetch = 120  # Reconnects every 120 seconds.
 
-    def run_socket(self):
+    def run_amino_socket(self):
         threading.Thread(target=self.reconnect_handler).start()
         websocket.enableTrace(self.socket_trace)
 
@@ -184,6 +184,7 @@ class Callbacks:
             "127:0": self.on_chat_unpin_announcement,
             "128:0": self.on_chat_tipping_enabled,
             "129:0": self.on_chat_tipping_disabled,
+            "201:0": self.on_voice_chat_info,
             "65281:0": self.on_timestamp_message,
             "65282:0": self.on_welcome_message,
             "65283:0": self.on_invite_message
@@ -253,6 +254,7 @@ class Callbacks:
     def on_chat_title_changed(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
     def on_chat_icon_changed(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
     def on_voice_chat_start(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
+    def on_voice_chat_info(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
     def on_video_chat_start(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
     def on_avatar_chat_start(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
     def on_voice_chat_end(self, data): self.call(getframe(0).f_code.co_name, objects.Event(data["o"]).Event)
